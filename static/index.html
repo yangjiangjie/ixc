@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel='stylesheet' href='stylesheets/style.css' />
+    <script type="text/javascript" src='javascripts/ejs.js' serverside='enable'></script>
+    <script type="text/javascript" src='javascripts/jquery-3.1.0.min.js'></script>
+    <script type="text/javascript" src='javascripts/socket.io-client.js' serverside='enable'></script>
+  </head>
+  <body>
+    <span>hello world</span>
+    <script type="text/ejs" id="title">
+      <title><%= title%></title>
+    </script>
+    <script type="text/javascript" serverside='enable'>
+      var server=io.connect("ws://localhost:4000");
+      server.on("news",function(data){
+        if($("title").length==0) {
+          $("head").prepend(ejs.render($("#title").html(), data));
+        }
+        if(typeof(server_env)==='function'){server_env();}
+      });
+    </script>
+  </body>
+</html>
